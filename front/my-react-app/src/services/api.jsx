@@ -19,14 +19,7 @@ export function getActivity(id) {
   } else {
     return fetch(`http://localhost:3000/user/${id}/activity`)
       .then((response) => response.json())
-      .then((data) => {
-        const activity = new Activity(data.data);
-        return activity.sessions.map((item, index) => ({
-          name: `${index + 1}`,
-          kilogram: item.kilogram,
-          calories: item.calories,
-        }));
-      });
+      .then((data) => new Activity(data.data));
   }
 }
 
@@ -45,13 +38,7 @@ export function getAverage(id) {
   } else {
     return fetch(`http://localhost:3000/user/${id}/average-sessions`)
       .then((response) => response.json())
-      .then((data) => {
-        const average = new AverageSessions(data.data);
-        return average.sessions.map((item, index) => ({
-          name: `${index + 1}`,
-          sessionLength: item.sessionLength,
-        }));
-      });
+      .then((data) => new AverageSessions(data.data));
   }
 }
 
@@ -70,13 +57,7 @@ export function getPerformance(id) {
   } else {
     return fetch(`http://localhost:3000/user/${id}/performance`)
       .then((response) => response.json())
-      .then((data) => {
-        const performance = new Performance(data.data);
-        return performance.data.map((item) => ({
-          subject: data.data.kind[item.kind],
-          value: item.value,
-        }));
-      });
+      .then((data) => new Performance(data.data));
   }
 }
 
@@ -92,12 +73,7 @@ export function getScore(id) {
   } else {
     return fetch(`http://localhost:3000/user/${id}`)
       .then((response) => response.json())
-      .then((data) => {
-        const user = new User(data.data);
-        return [
-          { name: "Score", value: user.todayScore * 100 },
-        ];
-      });
+      .then((data) => new User(data.data));
   }
 }
 
