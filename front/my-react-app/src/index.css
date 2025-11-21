@@ -123,5 +123,21 @@ h1 {
   .recharts-responsive-container {
     min-height: 280px!important;
   }
+  .navbar {
+    gap: 30px;
+  }
+  .container-icones {
+    height: auto;
+    padding-top: 3rem;
+  }
+  .dashboard {
+    padding: 20px;
+  }
+  .dashboard-content {
+    flex-direction: column;
+  }
+  .keyData {
+    flex-direction: row; 
+  }
 }
 
