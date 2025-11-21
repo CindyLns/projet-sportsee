@@ -9,10 +9,14 @@ import Keydata from '../../components/Keydata'
 import { getDatas } from "../../services/api";
 
 function Home() {
+    /*Récupération de l'id de l'utilisateur dans l'url*/ 
     const { id } = useParams(); 
+    /*State pour stocker les données utilisateur*/ 
     const [user, setuser] = useState ()
+    /*State pour afficher un éventuel message d'erreur*/ 
     const [error, setError] = useState(null);
 
+    /*Appelle l'API pour récupérer les données utilisateur pour l'id donnée et met à jour le state utilisateur; définit un message d'erreur en cas d'échec */ 
     useEffect(() => {
     getDatas(id)
         .then(userData => setuser(userData))

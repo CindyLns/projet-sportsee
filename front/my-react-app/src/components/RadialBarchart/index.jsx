@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { RadialBarChart, RadialBar, Legend, ResponsiveContainer, Label } from 'recharts';
 import { getScore } from "../../services/api";
 
+/*Style utilisé pour positionner le texte du Legend*/ 
 const style = {
   top: '26%',
   left: '20%',
@@ -13,17 +14,21 @@ const style = {
 };
 
 const Radialbarchart = () => {
+    /*Récupération de l'id de l'utilisateur dans l'url*/ 
     const { id } = useParams();
+    /*State contenant le score */ 
     const [score, setScore] = useState ();
+    /*State pour afficher un éventuel message d'erreur*/ 
     const [error, setError] = useState(null);
 
+    /*Appelle l'API pour récupérer les données score global de l'utilisateur pour l'id donnée et met à jour le state score global de l'utilisateur ; définit un message d'erreur en cas d'échec */
     useEffect(() => {
       getScore(id)
         .then(data => setScore(data))
         .catch(err => setError("Impossible de charger les données"));
     }, [id]);
 
-
+  /* Affiche un message d'erreur si les données n'ont pas pu être récupérées */
   if (error) {
     return (
       <div>
@@ -35,6 +40,7 @@ const Radialbarchart = () => {
   return (
       <ResponsiveContainer width="100%" height="100%">
         <RadialBarChart cx="50%" cy="50%" innerRadius="10%" outerRadius="80%" barSize={10} data={score} startAngle={90} endAngle={220} >
+          {/* Barre principale représentant le score de l'utilisateur */}
           <RadialBar
             minAngle={15}
             background
@@ -43,6 +49,7 @@ const Radialbarchart = () => {
             fill="#FF0000"
             cornerRadius={10}
           />
+          {/* Texte au centre du graphique indiquant le score */}
           <Label
             content={() => {
               return (

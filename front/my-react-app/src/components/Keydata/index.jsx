@@ -3,17 +3,21 @@ import { useParams } from 'react-router-dom'
 import { getDatas } from "../../services/api";
 
 function Keydata() {
+    /*Récupération de l'id de l'utilisateur dans l'url*/ 
     const { id } = useParams();
+    /*State pour stocker les données utilisateur*/ 
     const [datas, setDatas] = useState () 
+    /*State pour afficher un éventuel message d'erreur*/
     const [error, setError] = useState(null);
 
+    /*Appelle l'API pour récupérer les données utilisateur pour l'id donnée et met à jour le state utilisateur; définit un message d'erreur en cas d'échec */
     useEffect(() => {
     getDatas(id)
         .then(userData => setDatas(userData))
         .catch(() => setError("Impossible de charger les données utilisateur"));
     }, [id]);
 
-
+    /* Affiche un message d'erreur si les données n'ont pas pu être récupérées */
     if (error) {
         return (
         <div>
@@ -23,6 +27,7 @@ function Keydata() {
     }
     return (
         <div className='keyData'>
+            {/* Bloc Calories */}
             <div className='keyData-content'>
                 <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect opacity="0.066125" width="60" height="60" rx="6" fill="#FF0000"/>
@@ -33,6 +38,7 @@ function Keydata() {
                     <p className='keyData-subtitle'>Calories</p>
                 </div>
             </div>
+            {/* Bloc protéines */}
             <div className='keyData-content'>
                 <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="60" height="60" rx="6" fill="#4AB8FF" fill-opacity="0.1"/>
@@ -43,6 +49,7 @@ function Keydata() {
                     <p className='keyData-subtitle'>Proteines</p>
                 </div>
             </div>
+            {/* Bloc glucides */}
             <div className='keyData-content'>
                 <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect opacity="0.101652" width="60" height="60" rx="6" fill="#F9CE23"/>
@@ -55,6 +62,7 @@ function Keydata() {
                     <p className='keyData-subtitle'>Glucides</p>
                 </div>
             </div>
+            {/* Bloc Lipides */}
             <div className='keyData-content'>
                 <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="60" height="60" rx="6" fill="#FD5181" fill-opacity="0.1"/>

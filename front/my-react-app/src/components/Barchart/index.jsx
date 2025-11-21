@@ -4,17 +4,21 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import { getActivity } from "../../services/api";
 
 const Barchart = () => {
+    /*Récupération de l'id de l'utilisateur dans l'url*/ 
     const { id } = useParams(); 
+    /*State contenant les sessions activités*/ 
     const [activity, setActivity] = useState ();
+    /*State pour afficher un éventuel message d'erreur*/ 
     const [error, setError] = useState(null);
 
+    /*Appelle l'API pour récupérer les données activité pour l'id donnée et met à jour le state activité; définit un message d'erreur en cas d'échec */
     useEffect(() => {
       getActivity(id)
         .then(sessions => setActivity(sessions))
         .catch(err => setError ("Impossible de charger les données"));
     }, [id]);
 
-
+  /* Tooltip personnalisé pour l'affichage au survol des barres du graphique */
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
@@ -35,6 +39,7 @@ const Barchart = () => {
     }
   };
   
+  /* Affiche un message d'erreur si les données n'ont pas pu être récupérées */
   if (error) {
     return (
       <div>
@@ -42,6 +47,8 @@ const Barchart = () => {
       </div>
     )
   }
+
+  /* Affichage du graphique d'activité via Recharts */
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart
@@ -56,11 +63,17 @@ const Barchart = () => {
         }}
         barGap={8}  
       >
+        {/* Grille du graphique (ligne verticale désactivée) */}
         <CartesianGrid strokeDasharray="3 3" vertical={false} />
+        {/* Axe horizontal : jours / sessions */}
         <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} tickLine={false} />
+        {/* Axe vertical : poids & calories, affiché à droite */}
         <YAxis orientation="right"  tickLine={false} axisLine={false} />
+        {/* Tooltip personnalisé */}
         <Tooltip content={CustomTooltip}/>
+         {/* Légende du graphique */}
         <Legend verticalAlign="top" align="right" iconType="circle" iconSize="8" height={65}/>
+        {/* Titre interne du graphique */}
         <Text
           x={80}  
           y={65}   
@@ -71,7 +84,9 @@ const Barchart = () => {
         >
          Activité quotidienne
         </Text>
+        {/* Barre représentant le poids */}
         <Bar dataKey="kilogram" name="Poids (kg)" fill="#282d30" radius={[3, 3, 0, 0]}  barSize={7} />
+        {/* Barre représentant les calories brûlées */}
         <Bar dataKey="calories" name="Calories brûlées (kCal)" fill="#e60000" radius={[3, 3, 0, 0]}  barSize={7} />
       </BarChart>
     </ResponsiveContainer>
